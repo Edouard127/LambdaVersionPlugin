@@ -1,0 +1,14 @@
+{
+  "required" : true,
+  "compatibilityLevel" : "JAVA_8",
+  "package" : "com.lambda.mixins",
+  "refmap" : "mixins.LambdaVersionPlugin.refmap.json",
+  "client" : [
+    "MixinGuiMainMenuGuiMultiplayerGuiServerList"
+  ],
+  "mixins" : [
+    "MixinC00Handshake",
+    "MixinNetHandlerHandshakeTCP",
+    "accessor.AccessorDirectionMaps"
+  ]
+}

@@ -57,7 +57,7 @@ minecraft {
 }
 
 configurations {
-    jarLibs
+    compile.extendsFrom shadow
     // Force choosing the correct nightly build because Mac OS chooses an invalid one
     all {
         resolutionStrategy {
@@ -123,13 +123,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
-    // Add your dependencies below
-    // jarLibs 'com.lambda:example:1.0.0'
 }
 
 mixin {
     defaultObfuscationEnv 'searge'
-    add sourceSets.main, 'mixins.ExamplePlugin.refmap.json'
+    add sourceSets.main, 'mixins.LambdaVersionPlugin.refmap.json'
 }
 
 processResources {
@@ -150,14 +148,17 @@ jar.finalizedBy('reobfJar')
 
 shadowJar {
     archiveClassifier.set('')
-    configurations = []
+    configurations = [project.configurations.shadow]
     relocate 'kotlin', 'com.lambda.shadow.kotlin'
     relocate 'kotlinx', 'com.lambda.shadow.kotlinx'
     finalizedBy 'reobfShadowJar'
 }
 
+build.dependsOn shadowJar
+
 reobf {
-    shadowJar {}
+    shadowJar {
+    }
     jar {
         enabled = false
     }
